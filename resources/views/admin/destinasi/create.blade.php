@@ -2,6 +2,15 @@
       method="POST"
       enctype="multipart/form-data">
 
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul class="mb-0">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
     @csrf
 
     <div class="mb-3">
@@ -17,6 +26,28 @@
                name="lokasi"
                class="form-control">
     </div>
+
+    <input type="text" name="rating">
+
+    <div class="mb-3">
+    <label>Kategori Wisata</label>
+
+    <select name="kategori_wisata_id" class="form-control">
+
+        <option selected disabled value="">
+            -- Pilih Kategori --
+        </option>
+
+        @foreach ($kategoris as $kategori)
+
+            <option value="{{ $kategori->kategori_wisata_id }}">
+                {{ $kategori->nama_kategori }}
+            </option>
+
+        @endforeach
+
+    </select>
+</div>
 
     <div class="mb-3">
         <label>Harga Tiket</label>

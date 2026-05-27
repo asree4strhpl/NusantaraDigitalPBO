@@ -11,31 +11,56 @@
         <p class="hero-tagline col-lg-6 mx-auto">Rasakan petualangan sinematik di destinasi paling eksklusif dan menakjubkan di Indonesia.</p>
 
         <!-- Search Wisata & Filter Glassmorphism -->
-        <div class="search-container col-lg-8 mx-auto">
-            <form class="row g-2 p-2 align-items-center" action="#" method="GET">
-                <div class="col-md-5">
-                    <div class="input-group-premium">
-                        <i class="bi bi-search m-2 text-muted"></i>
-                        <input type="text" class="form-control" placeholder="Cari destinasi impian...">
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="input-group-premium">
-                        <i class="bi bi-geo-alt m-2 text-muted"></i>
-                        <select class="form-select">
-                            <option selected disabled>Kategori Destinasi</option>
-                            <option>Pantai & Laut</option>
-                            <option>Pegunungan</option>
-                            <option>Budaya & Sejarah</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <button type="submit" class="btn btn-premium-action w-100">Cari Wisata</button>
-                </div>
-            </form>
+<!-- Search Wisata & Filter Glassmorphism -->
+<div class="search-container col-lg-8 mx-auto mt-4">
+    <form action="{{ route('destinasi.index') }}"
+          method="GET"
+          class="mb-1 mt-1 mx-1">
+
+        <div class="row g-2 align-items-center">
+
+            <!-- Input Search -->
+            <div class="col-md-6">
+                <input type="text"
+                       name="search"
+                       class="form-control"
+                       placeholder="Cari destinasi..."
+                       value="{{ request('search') }}">
+            </div>
+
+            <!-- Select Kategori -->
+            <div class="col-md-4">
+                <select class="form-select" name="kategori">
+
+                    <option value="">
+                        Semua Kategori
+                    </option>
+
+                    @foreach ($kategoris as $kategori)
+
+                        <option value="{{ $kategori->kategori_wisata_id }}"
+                            {{ request('kategori') == $kategori->kategori_wisata_id ? 'selected' : '' }}>
+
+                            {{ $kategori->nama_kategori }}
+
+                        </option>
+
+                    @endforeach
+
+                </select>
+            </div>
+
+            <!-- Tombol -->
+            <div class="col-md-2">
+                <button type="submit"
+                        class="btn btn-premium-action w-100">
+                    Cari
+                </button>
+            </div>
+
         </div>
-    </div>
+    </form>
+</div>
 </section>
 
 <!-- Section Kategori Wisata -->
@@ -123,81 +148,65 @@
         <div class="section-header mb-5">
             <span class="sub-title">Rekomendasi</span>
             <h2 class="section-title">Destinasi Populer Pilihan</h2>
-        </div>
+        </div>  
 
-        <!-- Filter Komponen Tab / Button -->
-        <div class="d-flex flex-wrap justify-content-center gap-2 mb-5">
-            <button class="btn btn-filter-premium active">Semua Destinasi</button>
-            <button class="btn btn-filter-premium">Pantai & Tropis</button>
-            <button class="btn btn-filter-premium">Gunung & Trekking</button>
-            <button class="btn btn-filter-premium">Situs Budaya</button>
-            <button class="btn btn-filter-premium">Eko-Turisme</button>
-        </div>
-
-        {{-- BUG FIX 1: '< class=' diganti '<div class=' --}}
         <div class="row g-4">
-            <!-- Card 1 -->
-            <div class="col-lg-4 col-md-6">
-                <div class="card-premium">
-                    <div class="card-premium-img">
-                        <img src="https://images.unsplash.com/photo-1516690561799-46d8f74f9abf?auto=format&fit=crop&w=600&q=80" alt="Raja Ampat">
-                        <span class="badge-category">Laut & Pantai</span>
-                    </div>
-                    <div class="card-premium-body">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="location"><i class="bi bi-geo-alt me-1"></i> Papua Barat</span>
-                            <div class="rating"><i class="bi bi-star-fill me-1 text-warning"></i> 4.9</div>
+
+            @foreach ($destinasis as $destinasi)
+                <div class="col-lg-4 col-md-6">
+                    <div class="card-premium">
+
+                        <div class="card-premium-img">
+
+                            {{-- GAMBAR --}}
+                            <img src="{{ asset('storage/' . $destinasi->gambar) }}"
+                                 alt="{{ $destinasi->nama_wisata }}">
+
+                            <span class="badge-category">
+                                {{ $destinasi->kategoriWisata->nama_kategori ?? 'Wisata' }}
+                            </span>
                         </div>
-                        <h4 class="destination-title">
-                            <a href="{{ url('/detail') }}">Kepulauan Raja Ampat</a>
-                        </h4>
-                        <p class="destination-excerpt">Gugusan pulau karang indah di tengah laut biru kristal yang eksotis.</p>
+
+                        <div class="card-premium-body">
+
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+
+                                {{-- LOKASI --}}
+                                <span class="location">
+                                    <i class="bi bi-geo-alt me-1"></i>
+                                    {{ $destinasi->lokasi }}
+                                </span>
+
+                                {{-- RATING --}}
+                                <div class="rating">
+                                    <i class="bi bi-star-fill me-1 text-warning"></i>
+                                    {{ $destinasi->rating }}
+                                </div>
+
+                            </div>
+
+                            {{-- NAMA --}}
+                            <h4 class="destination-title">
+                                <a href="{{ route('destinasi.detail', $destinasi->slug) }}">
+                                          {{ $destinasi->nama_wisata }}
+                                 </a>
+                            </h4>
+
+                            {{-- DESKRIPSI --}}
+                            <p class="destination-excerpt">
+                                {{ Str::limit($destinasi->deskripsi, 100) }}
+                            </p>
+
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endforeach
 
-            <!-- Card 2 -->
-            <div class="col-lg-4 col-md-6">
-                <div class="card-premium">
-                    <div class="card-premium-img">
-                        <img src="https://images.unsplash.com/photo-1583212292454-1fe6229603b7?auto=format&fit=crop&w=800&q=80" alt="Labuan Bajo">
-                        <span class="badge-category">Petualangan</span>
-                    </div>
-                    <div class="card-premium-body">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="location"><i class="bi bi-geo-alt me-1"></i> NTT</span>
-                            <div class="rating"><i class="bi bi-star-fill me-1 text-warning"></i> 4.8</div>
-                        </div>
-                        <h4 class="destination-title">
-                            {{-- BUG FIX 2: quote tidak ditutup -> url('/destinasi/labuan-bajo') --}}
-                            <a href="{{ url('/destinasi/labuan-bajo') }}">Labuan Bajo & Pulau Padar</a>
-                        </h4>
-                        <p class="destination-excerpt">Melihat kadal purba Komodo dan perbukitan eksotis di tepi laut lepas.</p>
-                    </div>
-                </div>
-            </div>
+        <div class="mt-5 d-flex justify-content-center">
+    {{ $destinasis->withQueryString()->links() }}
+</div>
 
-            <!-- Card 3 -->
-            <div class="col-lg-4 col-md-6">
-                <div class="card-premium">
-                    <div class="card-premium-img">
-                        <img src="https://images.unsplash.com/photo-1516690561799-46d8f74f9abf?auto=format&fit=crop&w=800&q=80" alt="Bromo">
-                        <span class="badge-category">Pegunungan</span>
-                    </div>
-                    <div class="card-premium-body">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="location"><i class="bi bi-geo-alt me-1"></i> Jawa Timur</span>
-                            <div class="rating"><i class="bi bi-star-fill me-1 text-warning"></i> 4.7</div>
-                        </div>
-                        <h4 class="destination-title">
-                            <a href="{{ url('/destinasi/bromo') }}">Taman Nasional Bromo</a>
-                        </h4>
-                        <p class="destination-excerpt">Menyaksikan matahari terbit magis di atas lautan pasir vulkanik yang luas.</p>
-                    </div>
-                </div>
-            </div>
-        </div>{{-- END row g-4 --}}
-
+        </div>
     </div>
 </section>
 @endsection

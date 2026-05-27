@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class KategoriWisata extends Model
 {
     use HasFactory;
-
+    protected $primaryKey = 'kategori_wisata_id';
     protected $table = 'kategori_wisata';
     protected $fillable = ['nama_kategori', 'slug'];
 
