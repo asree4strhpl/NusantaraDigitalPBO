@@ -26,22 +26,34 @@
 
         <div class="hero-meta">
 
-            <span>
-                <i class="bi bi-geo-alt-fill"></i>
-                {{ $destinasi->lokasi }}
-            </span>
+    <span>
+        <i class="bi bi-geo-alt-fill"></i>
+        {{ $destinasi->lokasi }}
+    </span>
 
-            <span>
-                <i class="bi bi-star-fill text-warning"></i>
-                {{ $destinasi->rating }}/5
-            </span>
+    <span>
+        <i class="bi bi-star-fill text-warning"></i>
+        {{ $destinasi->rating }}/5
+    </span>
 
-            <span>
-                <i class="bi bi-ticket-perforated-fill"></i>
-                Rp {{ number_format($destinasi->harga_tiket, 0, ',', '.') }}
-            </span>
+    <span>
+        <i class="bi bi-ticket-perforated-fill"></i>
+        Rp {{ number_format($destinasi->harga_tiket, 0, ',', '.') }}
+    </span>
 
-        </div>
+    <span>
+        <i class="bi bi-thermometer-half"></i>
+        Suhu:
+        {{ $weather['main']['temp'] ?? '-' }}°C
+    </span>
+
+    <span>
+        <i class="bi bi-cloud-fill"></i>
+        Cuaca:
+        {{ $weather['weather'][0]['description'] ?? '-' }}
+    </span>
+
+</div>
 
     </div>
 
@@ -64,6 +76,73 @@
                 </p>
 
             </div>
+
+            <section class="mt-5">
+
+    <h3>Review Pengunjung</h3>
+
+    @auth
+
+    <form action="{{ route('review.store', $destinasi->id) }}"
+          method="POST"
+          class="mb-4">
+
+        @csrf
+
+        <div class="mb-3">
+            <label>Rating</label>
+
+            <select name="rating" class="form-control">
+                <option value="5">5 ⭐</option>
+                <option value="4">4 ⭐</option>
+                <option value="3">3 ⭐</option>
+                <option value="2">2 ⭐</option>
+                <option value="1">1 ⭐</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label>Komentar</label>
+
+            <textarea name="komentar"
+                      class="form-control"></textarea>
+        </div>
+
+        <button type="submit"
+                class="btn btn-dark">
+            Kirim Review
+        </button>
+
+    </form>
+
+    @endauth
+
+    {{-- LIST REVIEW --}}
+    @foreach ($destinasi->reviews as $review)
+
+        <div class="border rounded p-3 mb-3">
+
+            <div class="d-flex justify-content-between">
+
+                <strong>
+                    {{ $review->user->name }}
+                </strong>
+
+                <span>
+                    {{ $review->rating }} ⭐
+                </span>
+
+            </div>
+
+            <p class="mb-0 mt-2">
+                {{ $review->komentar }}
+            </p>
+
+        </div>
+
+    @endforeach
+
+</section>
 
         </div>
 

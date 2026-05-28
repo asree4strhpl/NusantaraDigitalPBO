@@ -1,111 +1,211 @@
 @extends('layouts.admin')
 
+@section('title', 'Kelola Destinasi')
+
 @section('content')
 
-<div class="container">
+<div class="admin-main-content">
 
-    <h1 class="mb-4">Kelola Destinasi</h1>
+    {{-- HEADER --}}
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
-    {{-- BUTTON TAMBAH --}}
-    <a href="{{ route('admin.destinasi.create') }}"
-       class="btn btn-primary mb-4">
-        Tambah Destinasi
-    </a>
+    <div>
+        <h1 class="welcome-title mb-1">
+            Kelola Destinasi
+        </h1>
+
+        <p class="welcome-subtitle">
+            Manage seluruh destinasi wisata Nusantara Digital
+        </p>
+    </div>
+
+    <!-- Group Tombol -->
+    <div class="d-flex gap-2">
+
+        <a href="{{ route('admin.dashboard') }}"
+           class="btn btn-premium-add">
+            <i class="bi bi-arrow-left me-2"></i>
+            Kembali ke panel admin
+        </a>
+
+        <a href="{{ route('admin.destinasi.create') }}"
+           class="btn btn-premium-add">
+            <i class="bi bi-plus-circle me-2"></i>
+            Tambah Destinasi
+        </a>
+
+    </div>
+
+</div>
+
+    {{-- ALERT --}}
+    @if(session('success'))
+
+        <div class="alert alert-success premium-alert">
+            {{ session('success') }}
+        </div>
+
+    @endif
 
     {{-- SEARCH --}}
-    <form method="GET"
-          action="{{ route('admin.destinasi.index') }}"
-          class="mb-4">
+    <div class="table-card-premium mb-4">
 
-        <div class="row">
+        <form method="GET">
 
-            <div class="col-md-10">
-                <input type="text"
-                       name="search"
-                       class="form-control"
-                       placeholder="Cari destinasi..."
-                       value="{{ request('search') }}">
+            <div class="row g-3 align-items-center">
+
+                <div class="col-md-10">
+
+                    <input type="text"
+                           name="search"
+                           class="form-control premium-search"
+                           placeholder="Cari destinasi..."
+                           value="{{ request('search') }}">
+
+                </div>
+
+                <div class="col-md-2">
+
+                    <button class="btn btn-premium-search w-100">
+                        Cari
+                    </button>
+
+                </div>
+
             </div>
 
-            <div class="col-md-2">
-                <button class="btn btn-dark w-100">
-                    Cari
-                </button>
-            </div>
+        </form>
 
-        </div>
-    </form>
+    </div>
 
     {{-- TABLE --}}
-    <table class="table table-bordered align-middle">
+    <div class="table-card-premium">
 
-        <thead>
-            <tr>
-                <th>Nama</th>
-                <th>Gambar</th>
-                <th>Kategori</th>
-                <th>Lokasi</th>
-                <th>Rating</th>
-                <th width="180">Aksi</th>
-            </tr>
-        </thead>
+        <div class="table-responsive">
 
-        <tbody>
+            <table class="table admin-custom-table align-middle">
 
-            @foreach($destinasi as $item)
+                <thead>
+                    <tr>
+                        <th>Gambar</th>
+                        <th>Nama Wisata</th>
+                        <th>Lokasi</th>
+                        <th>Kategori</th>
+                        <th>Rating</th>
+                        <th width="180">Aksi</th>
+                    </tr>
+                </thead>
 
-            <tr>
+                <tbody>
 
-                <td>{{ $item->nama_wisata }}</td>
+                @forelse($destinasi as $item)
 
-                <td>
-                    <img src="{{ asset('storage/' . $item->gambar) }}"
-                         width="120">
-                </td>
+                    <tr>
 
-                <td>{{ $item->kategoriWisata->nama_kategori ?? 'N/A' }}</td>
+                        {{-- GAMBAR --}}
+                        <td>
 
-                <td>{{ $item->lokasi }}</td>
+                            <img src="{{ asset('storage/' . $item->gambar) }}"
+                                 class="table-img">
 
-                <td>{{ $item->rating }}</td>
+                        </td>
 
-                <td>
+                        {{-- NAMA --}}
+                        <td class="fw-semibold text-navy">
+                            {{ $item->nama_wisata }}
+                        </td>
 
-                    <a href="{{ route('admin.destinasi.edit', $item->id) }}"
-                       class="btn btn-warning btn-sm">
-                        Edit
-                    </a>
+                        {{-- LOKASI --}}
+                        <td>
+                            {{ $item->lokasi }}
+                        </td>
 
-                    <form action="{{ route('admin.destinasi.destroy', $item->id) }}"
-                          method="POST"
-                          style="display:inline;">
+                        {{-- KATEGORI --}}
+                        <td>
 
-                        @csrf
-                        @method('DELETE')
+                            <span class="status-badge success">
 
-                        <button type="submit"
-                                class="btn btn-danger btn-sm"
-                                onclick="return confirm('Yakin hapus?')">
+                                {{ $item->kategoriWisata->nama_kategori ?? 'Tidak Ada' }}
 
-                            Hapus
+                            </span>
 
-                        </button>
+                        </td>
 
-                    </form>
+                        {{-- RATING --}}
+                        <td>
 
-                </td>
+                            <div class="rating-badge">
+                                <i class="bi bi-star-fill text-warning"></i>
 
-            </tr>
+                                {{ $item->rating }}
+                            </div>
 
-            @endforeach
+                        </td>
 
-        </tbody>
+                        {{-- AKSI --}}
+                        <td>
 
-    </table>
+                            <div class="d-flex gap-2">
 
-    {{-- PAGINATION --}}
-    <div class="mt-4">
-        {{ $destinasi->links() }}
+                                <a href="{{ route('admin.destinasi.edit', $item->id) }}"
+                                   class="btn btn-action-edit">
+
+                                    <i class="bi bi-pencil-square"></i>
+
+                                </a>
+
+                                <form action="{{ route('admin.destinasi.destroy', $item->id) }}"
+                                      method="POST">
+
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button type="submit"
+                                            class="btn btn-action-delete">
+
+                                        <i class="bi bi-trash"></i>
+
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                @empty
+
+                    <tr>
+
+                        <td colspan="6" class="text-center py-5">
+
+                            <h5 class="mb-2">
+                                Destinasi tidak ditemukan
+                            </h5>
+
+                            <p class="text-muted mb-0">
+                                Coba kata kunci lain
+                            </p>
+
+                        </td>
+
+                    </tr>
+
+                @endforelse
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {{-- PAGINATION --}}
+        <div class="mt-4">
+            {{ $destinasi->withQueryString()->links() }}
+        </div>
+
     </div>
 
 </div>

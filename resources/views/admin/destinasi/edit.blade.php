@@ -1,67 +1,193 @@
 @extends('layouts.admin')
 
+@section('title', 'Edit Destinasi')
+
 @section('content')
-<div class="container">
-    <h1>Edit Destinasi</h1>
 
-    <form action="{{ route('admin.destinasi.update', $destinasi->id) }}"
-      method="POST"
-      enctype="multipart/form-data">
+<div class="admin-main-content">
 
-    @csrf
-    @method('PUT')
+    {{-- HEADER --}}
+    <div class="mb-4">
 
-    <input type="text"
-           name="nama_wisata"
-           value="{{ $destinasi->nama_wisata }}">
+        <h1 class="welcome-title mb-1">
+            Edit Destinasi
+        </h1>
 
-       <div class="mb-3">
-    <label>Kategori Wisata</label>
+        <p class="welcome-subtitle">
+            Perbarui informasi destinasi wisata
+        </p>
 
-    <select name="kategori_wisata_id" class="form-control">
+    </div>
 
-        <option selected disabled value="">
-            -- Pilih Kategori --
-        </option>
+    <div class="form-card-premium">
 
-        @foreach ($kategoris as $kategori)
+        <form action="{{ route('admin.destinasi.update', $destinasi->id) }}"
+              method="POST"
+              enctype="multipart/form-data">
 
-             <option value="{{ $kategori->kategori_wisata_id }}"
-                     {{ $destinasi->kategori_wisata_id == $kategori->kategori_wisata_id ? 'selected' : '' }}>
+            @csrf
+            @method('PUT')
 
-                     {{ $kategori->nama_kategori }}
+            <div class="row g-4">
 
-              </option>
+                {{-- NAMA WISATA --}}
+                <div class="col-md-6">
 
-        @endforeach
+                    <label class="premium-label">
+                        Nama Wisata
+                    </label>
 
-    </select>
+                    <input type="text"
+                           name="nama_wisata"
+                           class="form-control premium-input"
+                           value="{{ old('nama_wisata', $destinasi->nama_wisata) }}">
+
+                    @error('nama_wisata')
+                        <small class="text-danger">
+                            {{ $message }}
+                        </small>
+                    @enderror
+
+                </div>
+
+                {{-- KATEGORI --}}
+                <div class="col-md-6">
+
+                    <label class="premium-label">
+                        Kategori Wisata
+                    </label>
+
+                    <select name="kategori_wisata_id"
+                            class="form-select premium-input">
+
+                        <option disabled value="">
+                            -- Pilih Kategori --
+                        </option>
+
+                        @foreach ($kategoris as $kategori)
+
+                            <option value="{{ $kategori->kategori_wisata_id }}"
+                                {{ $destinasi->kategori_wisata_id == $kategori->kategori_wisata_id ? 'selected' : '' }}>
+
+                                {{ $kategori->nama_kategori }}
+
+                            </option>
+
+                        @endforeach
+
+                    </select>
+
+                </div>
+
+                {{-- LOKASI --}}
+                <div class="col-md-6">
+
+                    <label class="premium-label">
+                        Lokasi
+                    </label>
+
+                    <input type="text"
+                           name="lokasi"
+                           class="form-control premium-input"
+                           value="{{ old('lokasi', $destinasi->lokasi) }}">
+
+                </div>
+
+                {{-- HARGA --}}
+                <div class="col-md-3">
+
+                    <label class="premium-label">
+                        Harga Tiket
+                    </label>
+
+                    <input type="number"
+                           name="harga_tiket"
+                           class="form-control premium-input"
+                           value="{{ old('harga_tiket', $destinasi->harga_tiket) }}">
+
+                </div>
+
+                {{-- RATING --}}
+                <div class="col-md-3">
+
+                    <label class="premium-label">
+                        Rating
+                    </label>
+
+                    <input type="text"
+                           name="rating"
+                           class="form-control premium-input"
+                           value="{{ old('rating', $destinasi->rating) }}">
+
+                </div>
+
+                {{-- DESKRIPSI --}}
+                <div class="col-12">
+
+                    <label class="premium-label">
+                        Deskripsi
+                    </label>
+
+                    <textarea name="deskripsi"
+                              rows="6"
+                              class="form-control premium-input">{{ old('deskripsi', $destinasi->deskripsi) }}</textarea>
+
+                </div>
+
+                {{-- GAMBAR --}}
+                <div class="col-12">
+
+                    <label class="premium-label">
+                        Upload Gambar Baru
+                    </label>
+
+                    <input type="file"
+                           name="gambar"
+                           class="form-control premium-input">
+
+                    @if($destinasi->gambar)
+
+                        <div class="mt-4">
+
+                            <p class="mb-2 fw-semibold">
+                                Gambar Saat Ini
+                            </p>
+
+                            <img src="{{ asset('storage/' . $destinasi->gambar) }}"
+                                 class="preview-img-admin">
+
+                        </div>
+
+                    @endif
+
+                </div>
+
+            </div>
+
+            {{-- BUTTON --}}
+            <div class="mt-5 d-flex gap-3">
+
+                <button type="submit"
+                        class="btn btn-premium-save">
+
+                    <i class="bi bi-check-circle me-2"></i>
+                    Update Destinasi
+
+                </button>
+
+                <a href="{{ route('admin.destinasi.index') }}"
+                   class="btn btn-premium-cancel">
+
+                    Batal
+
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
 </div>
 
-    <input type="text"
-           name="lokasi"
-           value="{{ $destinasi->lokasi }}">
-
-    <input type="number"
-           name="harga_tiket"
-           value="{{ $destinasi->harga_tiket }}">
-
-    <input type="text"
-           name="rating"
-           value="{{ $destinasi->rating }}">
-
-    <textarea name="deskripsi">{{ $destinasi->deskripsi }}</textarea>
-
-    <input type="file" name="gambar">
-
-    @if($destinasi->gambar)
-        <img src="{{ asset('storage/' . $destinasi->gambar) }}"
-             width="120">
-    @endif
-
-    <button type="submit">
-        Update
-    </button>
-</form>
-</div>
 @endsection

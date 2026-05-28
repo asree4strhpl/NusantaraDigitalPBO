@@ -6,6 +6,8 @@ use App\Http\Controllers\EksplorasiController;
 use App\Http\Controllers\Admin\DestinasiController;
 use App\Models\Destinasi;
 use App\Models\KategoriWisata;
+use App\Http\Controllers\ReviewController;
+use Illuminate\Support\Facades\Http;
 /*
 |--------------------------------------------------------------------------
 | PUBLIC ROUTES
@@ -68,18 +70,32 @@ Route::get('/destinasi/{slug}', function ($slug) {
     $destinasi = Destinasi::where('slug', $slug)
                     ->firstOrFail();
 
+    // related destinasi
     $related = Destinasi::where('id', '!=', $destinasi->id)
                     ->latest()
                     ->take(3)
                     ->get();
 
+    // ambil cuaca realtime
+    $response = $response = Http::withoutVerifying()->get(
+        'https://api.openweathermap.org/data/2.5/weather',
+        [
+            'q' => $destinasi->lokasi,
+            'appid' => env('OPENWEATHER_API_KEY'),
+            'units' => 'metric',
+            'lang' => 'id',
+        ]
+    );
+
+    $weather = $response->json();
+
     return view('destinasi.detail', compact(
         'destinasi',
-        'related'
+        'related',
+        'weather'
     ));
 
 })->name('destinasi.detail');
-
 
 /*
 |--------------------------------------------------------------------------
@@ -126,12 +142,38 @@ Route::middleware(['auth'])
 
             $totalDestinasi = Destinasi::count();
 
-            return view('admin.dashboard', compact('totalDestinasi'));
+            $totalKategori = KategoriWisata::count();
+
+            $destinasiTerbaru = Destinasi::latest()
+                                        ->take(5)
+                                        ->get();
+
+            return view('admin.dashboard', compact(
+                'totalDestinasi',
+                'totalKategori',
+                'destinasiTerbaru'
+            ));
 
         })->name('dashboard');
 
         Route::resource('destinasi', DestinasiController::class);
 });
-
-
 require __DIR__.'/auth.php';
+
+Route::post('/review/{id}', [ReviewController::class, 'store'])
+    ->middleware('auth')
+    ->name('review.store');
+
+
+// SOAPP //
+
+Route::get('/soap/destinasi', function () {
+
+    $destinasi = \App\Models\Destinasi::all();
+
+    return response()->view(
+        'soap.destinasi',
+        compact('destinasi')
+    )->header('Content-Type', 'text/xml');
+
+});

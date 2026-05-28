@@ -270,17 +270,209 @@
 .admin-wrapper {
     display: flex;
     min-height: 100vh;
+    @media (max-width: 991px) {
+
+    .admin-wrapper {
+        flex-direction: column;
+    }
+
 }
+}
+
 
 .admin-sidebar {
     width: 260px;
-    background: #0d1b2a;
+    background-color: #0d1b2a;
     min-height: 100vh;
+    position: sticky;
+    top: 0;
     padding: 30px 20px;
-    flex-shrink: 0;
+}
+
+@media (max-width: 991px) {
+
+    .admin-sidebar {
+        width: 100%;
+        min-height: auto;
+        position: relative;
+        padding: 20px;
+    }
+
+}
+
+@media (max-width: 991px) {
+
+    .sidebar-menu {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .menu-link {
+        margin-bottom: 0;
+    }
+
 }
 
 .admin-main-content {
     flex: 1;
     padding: 40px;
+}
+
+@media (max-width: 991px) {
+
+    .admin-main-content {
+        padding: 20px;
+    }
+
+}
+
+/* =========================================
+   ADMIN DESTINASI PREMIUM
+========================================= */
+
+.table-img{
+    width: 90px;
+    height: 65px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.btn-premium-add{
+    background: #0d1b2a;
+    color: #fff;
+    border-radius: 12px;
+    padding: 12px 20px;
+    font-weight: 600;
+    border: none;
+}
+
+.btn-premium-add:hover{
+    background: #1b263b;
+    color: #fff;
+}
+
+.premium-alert{
+    border-radius: 14px;
+    border: none;
+    padding: 14px 18px;
+}
+
+.premium-search{
+    height: 52px;
+    border-radius: 14px;
+    border: 1px solid #e5e7eb;
+    box-shadow: none !important;
+}
+
+.btn-premium-search{
+    height: 52px;
+    border-radius: 14px;
+    background: #e0a96d;
+    color: #fff;
+    border: none;
+    font-weight: 600;
+}
+
+.btn-premium-search:hover{
+    background: #c48c4f;
+    color: #fff;
+}
+
+.btn-action-delete{
+    border-radius: 10px;
+    border: 1px solid #ffdddd;
+    color: #dc3545;
+    background: #fff;
+}
+
+.btn-action-delete:hover{
+    background: #dc3545;
+    color: #fff;
+}
+/* =========================================
+   FORM PREMIUM
+========================================= */
+
+.form-card-premium{
+    background: #fff;
+    border-radius: 20px;
+    padding: 35px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.03);
+}
+
+.premium-label{
+    font-weight: 600;
+    margin-bottom: 10px;
+    display: block;
+    color: #0d1b2a;
+}
+
+.premium-input{
+    border-radius: 14px;
+    min-height: 52px;
+    border: 1px solid #e5e7eb;
+    box-shadow: none !important;
+}
+
+textarea.premium-input{
+    min-height: 140px;
+}
+
+.btn-premium-save{
+    background: #0d1b2a;
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    padding: 12px 24px;
+    font-weight: 600;
+}
+
+.btn-premium-save:hover{
+    background: #1b263b;
+    color: #fff;
+}
+
+.btn-premium-cancel{
+    border-radius: 14px;
+    padding: 12px 24px;
+    font-weight: 600;
+    border: 1px solid #ddd;
+}
+
+.preview-img-admin{
+    width: 180px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 14px;
+    border: 1px solid #eee;
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+@media (max-width: 768px) {
+
+    input,
+    textarea,
+    select,
+    .form-control {
+        font-size: 14px;
+    }
+
+    .btn {
+        width: 100%;
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    .stat-card-premium {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
 }

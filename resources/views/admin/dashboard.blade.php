@@ -56,7 +56,7 @@
                     <div class="stat-card-premium">
                         <div>
                             <span class="stat-label">Kategori Aktif</span>
-                            <h2 class="stat-number">12</h2>
+                            <h2 class="stat-number">{{ $totalKategori }}</h2>
                         </div>
                         <div class="stat-icon-wrapper bg-green-light text-green">
                             <i class="bi bi-tags"></i>
@@ -93,36 +93,48 @@
                             </tr>
                         </thead>
                         <tbody>
+
+                            @foreach ($destinasiTerbaru as $item)
+
                             <tr>
-                                <td class="fw-semibold text-navy">Kepulauan Raja Ampat</td>
-                                <td class="text-muted">Papua Barat</td>
+
+                                <td class="fw-semibold text-navy">
+                                    {{ $item->nama_wisata }}
+                                </td>
+
+                                <td class="text-muted">
+                                    {{ $item->lokasi }}
+                                </td>
+
                                 <td>
                                     <div class="rating-badge">
-                                        <i class="bi bi-star-fill text-warning"></i> <span>4.9</span>
+                                        <i class="bi bi-star-fill text-warning"></i>
+
+                                        <span>{{ $item->rating }}</span>
                                     </div>
                                 </td>
-                                <td><span class="status-badge success">Published</span></td>
-                                <td class="text-end">
-                                    <button class="btn btn-action-edit">
-                                        <i class="bi bi-pencil-square me-1"></i> Edit
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="fw-semibold text-navy">Taman Nasional Bromo</td>
-                                <td class="text-muted">Jawa Timur</td>
+
                                 <td>
-                                    <div class="rating-badge">
-                                        <i class="bi bi-star-fill text-warning"></i> <span>4.7</span>
-                                    </div>
+                                    <span class="status-badge success">
+                                        Published
+                                    </span>
                                 </td>
-                                <td><span class="status-badge success">Published</span></td>
+
                                 <td class="text-end">
-                                    <button class="btn btn-action-edit">
-                                        <i class="bi bi-pencil-square me-1"></i> Edit
-                                    </button>
+
+                                    <a href="{{ route('admin.destinasi.edit', $item->id) }}"
+                                    class="btn btn-action-edit">
+
+                                        <i class="bi bi-pencil-square me-1"></i>
+                                        Edit
+
+                                    </a>
+
                                 </td>
+
                             </tr>
+
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

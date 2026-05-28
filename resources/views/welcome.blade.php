@@ -151,8 +151,17 @@
         </div>  
 
         <div class="row g-4">
+            @if ($destinasis->count() == 0)
+
+                <div class="text-center py-5">
+                <h4>Tidak ada destinasi ditemukan</h4>
+                </div>
+
+            @endif
 
             @foreach ($destinasis as $destinasi)
+
+             
                 <div class="col-lg-4 col-md-6">
                     <div class="card-premium">
 
