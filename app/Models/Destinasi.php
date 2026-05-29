@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Review;
+use App\Models\Favorite;
 
 class Destinasi extends Model
 {
@@ -37,4 +38,10 @@ class Destinasi extends Model
     {
         return $this->hasMany(Review::class);
     }
+
+    public function favorites()
+{
+    return $this->hasMany(Favorite::class);
 }
+}
+

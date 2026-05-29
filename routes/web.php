@@ -8,6 +8,7 @@ use App\Models\Destinasi;
 use App\Models\KategoriWisata;
 use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Http;
+use App\Http\Controllers\FavoriteController;
 /*
 |--------------------------------------------------------------------------
 | PUBLIC ROUTES
@@ -104,8 +105,16 @@ Route::get('/destinasi/{slug}', function ($slug) {
 */
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+    $favorites = auth()->user()
+        ->favorites()
+        ->with('destinasi')
+        ->latest()
+        ->get();
+
+    return view('dashboard', compact('favorites'));
+
+})->middleware(['auth'])->name('dashboard');
 
 
 /*
@@ -177,3 +186,7 @@ Route::get('/soap/destinasi', function () {
     )->header('Content-Type', 'text/xml');
 
 });
+
+Route::post('/favorite/{id}', [FavoriteController::class, 'toggle'])
+    ->middleware('auth')
+    ->name('favorite.toggle');

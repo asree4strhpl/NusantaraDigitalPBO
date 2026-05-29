@@ -14,223 +14,278 @@
 
 <body class="bg-gray-100">
 
-    <!-- Header -->
-    <div class="bg-white shadow-sm border-b">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <!-- Main Content -->
+<div class="py-8 px-4">
 
-            <div>
-                <h2 class="text-2xl font-bold text-gray-800">
-                    Dashboard Pengguna
-                </h2>
+    <div class="max-w-7xl mx-auto">
 
-                <p class="text-sm text-gray-500">
-                    Selamat datang di Nusantara Digital
-                </p>
-            </div>
+        <!-- Welcome -->
+        <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 mb-6">
 
-            <a href="{{ url('/') }}"
-               class="text-sm text-amber-600 hover:text-amber-700 font-medium flex items-center gap-2">
-                <i class="bi bi-arrow-left"></i>
-                Kembali ke Beranda
-            </a>
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
 
-        </div>
-    </div>
+                <div>
 
-    <!-- Content -->
-    <div class="py-10">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+                    <h2 class="text-3xl font-bold text-slate-800">
+                        Selamat Datang,
+                        {{ Auth::user()->name }} 👋
+                    </h2>
 
-            <!-- Welcome Card -->
-            <div class="bg-white overflow-hidden shadow-sm rounded-xl border border-gray-100">
-                <div class="p-6 flex items-center justify-between flex-wrap gap-4">
-
-                    <div>
-                        <h3 class="text-2xl font-bold text-slate-800">
-                            Selamat Datang, {{ Auth::user()->name }} 👋
-                        </h3>
-
-                        <p class="text-sm text-gray-500 mt-2">
-                            Anda berhasil login ke sistem pariwisata digital.
-                        </p>
-                    </div>
-
-                    <span class="inline-flex items-center px-4 py-2 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                        <span class="h-2 w-2 rounded-full bg-green-400 mr-2"></span>
-                        Online
-                    </span>
+                    <p class="text-gray-500 mt-2">
+                        Nikmati pengalaman eksplorasi wisata digital modern.
+                    </p>
 
                 </div>
-            </div>
 
-            <!-- Main Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                <a href="{{ route('destinasi.index') }}"
+                class="class=flex items-center gap-2 bg-gray-400 text-green-700 px-4 py-2 rounded-full text-sm font-medium w-fit">
 
-                <!-- Left -->
-                <div class="md:col-span-2 space-y-6">
+                    <i class="bi bi-house-door"></i>
 
-                    <!-- Menu Cards -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    Kembali ke Beranda
 
-                        <!-- Eksplorasi -->
-                        <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100 flex items-start gap-4">
+                </a>
 
-                            <div class="p-3 rounded-lg bg-amber-50 text-amber-600">
+        </div>
+
+        <!-- GRID -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+            <!-- LEFT -->
+            <div class="lg:col-span-2 space-y-6">
+
+                <!-- MENU -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+                    <!-- CARD -->
+                    <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-5 hover:shadow-lg transition">
+
+                        <div class="flex items-start gap-4">
+
+                            <div class="w-14 h-14 rounded-2xl bg-amber-100 flex items-center justify-center text-amber-600">
+
                                 <i class="bi bi-compass text-2xl"></i>
+
                             </div>
 
                             <div>
-                                <h4 class="font-semibold text-gray-800">
+
+                                <h4 class="font-bold text-gray-800">
                                     Eksplorasi Wisata
                                 </h4>
 
-                                <p class="text-xs text-gray-500 mt-1 mb-3">
+                                <p class="text-sm text-gray-500 mt-1 mb-3">
                                     Jelajahi destinasi wisata terbaik Indonesia.
                                 </p>
 
                                 <a href="{{ url('/kategori') }}"
-                                   class="text-xs font-medium text-amber-600 hover:underline inline-flex items-center gap-1">
-
-                                    Buka Eksplorasi
-                                    <i class="bi bi-chevron-right"></i>
+                                   class="text-sm text-amber-600 font-semibold hover:underline">
+                                    <i class="bi bi-compass me-1"></i>
+                                    Buka Eksplorasi →
                                 </a>
-                            </div>
 
-                        </div>
-
-                        <!-- Cuaca -->
-                        <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100 flex items-start gap-4">
-
-                            <div class="p-3 rounded-lg bg-blue-50 text-blue-600">
-                                <i class="bi bi-cloud-sun text-2xl"></i>
-                            </div>
-
-                            <div>
-                                <h4 class="font-semibold text-gray-800">
-                                    Pantau Cuaca
-                                </h4>
-
-                                <p class="text-xs text-gray-500 mt-1 mb-3">
-                                    Lihat perkiraan cuaca destinasi wisata.
-                                </p>
-
-                                <a href="#"
-                                   class="text-xs font-medium text-blue-600 hover:underline inline-flex items-center gap-1">
-
-                                    Cek Cuaca
-                                    <i class="bi bi-chevron-right"></i>
-                                </a>
                             </div>
 
                         </div>
 
                     </div>
 
-                    <!-- Management -->
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <!-- CARD -->
+                    <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-5 hover:shadow-lg transition">
 
-    <h4 class="font-bold text-gray-800 mb-4 flex items-center gap-2">
-        <i class="bi bi-sliders text-amber-600"></i>
-        Manajemen Pariwisata
-    </h4>
+                        <div class="flex items-start gap-4">
 
-    <div class="flex flex-row gap-3 flex-wrap">
+                            <div class="w-14 h-14 rounded-2xl bg-blue-100 flex items-center justify-center text-blue-600">
 
-        <!-- Destinasi -->
-        <a href="#"
-           class="flex-1 min-w-[180px] p-4 rounded-lg border border-gray-100 hover:bg-amber-50 transition text-center group">
+                                <i class="bi bi-cloud-sun text-2xl"></i>
 
-            <i class="bi bi-geo-alt text-lg text-gray-600 group-hover:text-amber-600 block mb-2"></i>
+                            </div>
 
-            <span class="text-sm font-medium text-gray-700">
-                Destinasi
-            </span>
-        </a>
+                            <div>
 
-        <!-- Hotel -->
-        <a href="#"
-           class="flex-1 min-w-[180px] p-4 rounded-lg border border-gray-100 hover:bg-amber-50 transition text-center group">
+                                <h4 class="font-bold text-gray-800">
+                                    Pantau Cuaca
+                                </h4>
 
-            <i class="bi bi-building text-lg text-gray-600 group-hover:text-amber-600 block mb-2"></i>
+                                <p class="text-sm text-gray-500 mt-1 mb-3">
+                                    Lihat kondisi cuaca destinasi realtime.
+                                </p>
 
-            <span class="text-sm font-medium text-gray-700">
-                Hotel
-            </span>
-        </a>
+                                <a href="#"
+                                   class="text-sm text-blue-600 font-semibold hover:underline">
 
-        <!-- Event -->
-        <a href="#"
-           class="flex-1 min-w-[180px] p-4 rounded-lg border border-gray-100 hover:bg-amber-50 transition text-center group">
+                                    Cek Cuaca →
 
-            <i class="bi bi-calendar-event text-lg text-gray-600 group-hover:text-amber-600 block mb-2"></i>
+                                </a>
 
-            <span class="text-sm font-medium text-gray-700">
-                Event
-            </span>
-        </a>
-
-    </div>
-</div>
-
-                <!-- Right -->
-                <div>
-
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-
-                        <h4 class="font-bold text-gray-800 mb-4 flex items-center gap-2">
-                            <i class="bi bi-person-gear text-amber-600"></i>
-                            Pengaturan Akun
-                        </h4>
-
-                        <div class="space-y-3">
-
-                            <a href="{{ route('profile.edit') }}"
-                               class="w-full flex items-center justify-between p-3 rounded-lg bg-gray-50 hover:bg-amber-50 transition group">
-
-                                <div class="flex items-center gap-3">
-                                    <i class="bi bi-person"></i>
-
-                                    <span class="text-sm font-medium">
-                                        Edit Profil
-                                    </span>
-                                </div>
-
-                                <i class="bi bi-chevron-right"></i>
-                            </a>
-
-                            <a href="{{ route('profile.edit') }}"
-                               class="w-full flex items-center justify-between p-3 rounded-lg bg-gray-50 hover:bg-amber-50 transition group">
-
-                                <div class="flex items-center gap-3">
-                                    <i class="bi bi-key"></i>
-
-                                    <span class="text-sm font-medium">
-                                        Ubah Password
-                                    </span>
-                                </div>
-
-                                <i class="bi bi-chevron-right"></i>
-                            </a>
-
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-
-                                <button type="submit"
-                                        class="w-full flex items-center justify-between p-3 rounded-lg bg-red-50 hover:bg-red-100 transition group">
-
-                                    <div class="flex items-center gap-3">
-                                        <i class="bi bi-box-arrow-right text-red-600"></i>
-
-                                        <span class="text-sm font-medium text-red-600">
-                                            Logout
-                                        </span>
-                                    </div>
-
-                                    <i class="bi bi-chevron-right text-red-600"></i>
-                                </button>
-                            </form>
+                            </div>
 
                         </div>
+
+                    </div>
+
+                </div>
+
+                <!-- FAVORITES -->
+                <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-6">
+
+                    <div class="flex items-center justify-between mb-6">
+
+                        <div>
+
+                            <h3 class="text-2xl font-bold text-gray-800">
+                                Destinasi Favorit
+                            </h3>
+
+                            <p class="text-sm text-gray-500 mt-1">
+                                Tempat wisata yang kamu simpan.
+                            </p>
+
+                        </div>
+
+                        <i class="bi bi-star-fill text-warning text-2xl"></i>
+
+                    </div>
+
+                    <div class="flex flex-row gap-4 flex-wrap">
+
+                    @foreach ($favorites as $favorite)
+
+                        <div class="bg-white rounded-4xl shadow-sm overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300"
+                            style="width: 260px;">
+
+                            {{-- GAMBAR --}}
+                            <div style="height: 170px; overflow: hidden;">
+
+                                <img src="{{ asset('storage/' . $favorite->destinasi->gambar) }}"
+                                    class="w-100 h-100 object-fit-cover"
+                                    alt="{{ $favorite->destinasi->nama_wisata }}">
+
+                            </div>
+
+                            {{-- CONTENT --}}
+                            <div class="p-3">
+
+                                <div class="flex items-center justify-between mb-2">
+
+                                    <span class="text-xs px-2 py-1 rounded-pill bg-warning-subtle text-warning fw-semibold">
+                                        Favorit
+                                    </span>
+
+                                    <i class="bi bi-star-fill text-warning"></i>
+
+                                </div>
+
+                                <h5 class="fw-bold text-dark mb-1"
+                                    style="
+                                        font-size: 1rem;
+                                        line-height: 1.4;
+                                    ">
+
+                                    {{ $favorite->destinasi->nama_wisata }}
+
+                                </h5>
+
+                                <p class="text-muted mb-3"
+                                style="font-size: 0.85rem;">
+
+                                    <i class="bi bi-geo-alt-fill me-1"></i>
+
+                                    {{ $favorite->destinasi->lokasi }}
+
+                                </p>
+
+                                <a href="{{ route('destinasi.detail', $favorite->destinasi->slug) }}"
+                                class="btn btn-dark w-100 rounded-pill">
+
+                                    Lihat Destinasi
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    @endforeach
+
+                </div>
+
+                </div>
+
+            </div>
+
+            <!-- RIGHT -->
+            <div>
+
+                <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 sticky top-5">
+
+                    <h4 class="font-bold text-gray-800 mb-5 flex items-center gap-2">
+
+                        <i class="bi bi-person-circle text-amber-600"></i>
+
+                        Pengaturan Akun
+
+                    </h4>
+
+                    <div class="space-y-3">
+
+                        <a href="{{ route('profile.edit') }}"
+                           class="flex items-center justify-between bg-gray-50 hover:bg-amber-50 transition p-4 rounded-2xl">
+
+                            <div class="flex items-center gap-3">
+
+                                <i class="bi bi-person"></i>
+
+                                <span class="text-sm font-medium">
+                                    Edit Profil
+                                </span>
+
+                            </div>
+
+                            <i class="bi bi-chevron-right"></i>
+
+                        </a>
+
+                        <a href="{{ route('profile.edit') }}"
+                           class="flex items-center justify-between bg-gray-50 hover:bg-amber-50 transition p-4 rounded-2xl">
+
+                            <div class="flex items-center gap-3">
+
+                                <i class="bi bi-key"></i>
+
+                                <span class="text-sm font-medium">
+                                    Ubah Password
+                                </span>
+
+                            </div>
+
+                            <i class="bi bi-chevron-right"></i>
+
+                        </a>
+
+                        <form method="POST" action="{{ route('logout') }}">
+
+                            @csrf
+
+                            <button type="submit"
+                                    class="w-full flex items-center justify-between bg-red-50 hover:bg-red-100 transition p-4 rounded-2xl">
+
+                                <div class="flex items-center gap-3">
+
+                                    <i class="bi bi-box-arrow-right text-red-600"></i>
+
+                                    <span class="text-sm font-medium text-red-600">
+                                        Logout
+                                    </span>
+
+                                </div>
+
+                                <i class="bi bi-chevron-right text-red-600"></i>
+
+                            </button>
+
+                        </form>
 
                     </div>
 
@@ -239,7 +294,10 @@
             </div>
 
         </div>
+
     </div>
+
+</div>
 
 </body>
 </html>

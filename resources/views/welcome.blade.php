@@ -211,7 +211,7 @@
                 </div>
             @endforeach
 
-        <div class="mt-5 d-flex justify-content-center">
+       <div class="pagination-wrapper mt-5 d-flex justify-content-center">
     {{ $destinasis->withQueryString()->links() }}
 </div>
 

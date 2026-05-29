@@ -53,7 +53,39 @@
         {{ $weather['weather'][0]['description'] ?? '-' }}
     </span>
 
+    <!-- //favorite button -->
+        @auth
+
+        <form action="{{ route('favorite.toggle', $destinasi->id) }}"
+            method="POST">
+
+            @csrf
+
+            <button type="submit" class="btn p-0 border-0">
+
+                @if (
+                    $destinasi->favorites
+                        ->where('user_id', auth()->id())
+                        ->count()
+                )
+
+                    <i class="bi bi-star-fill text-warning fs-2"></i>
+
+                @else
+
+                    <i class="bi bi-star text-white fs-2"></i>
+
+                @endif
+
+            </button>
+
+        </form>
+
+@endauth
+    
 </div>
+
+
 
     </div>
 

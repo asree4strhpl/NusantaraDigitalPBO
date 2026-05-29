@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Review;
+use App\Models\Favorite;
 
 #[Fillable(['name', 'email', 'password'])]
 #[Hidden(['password', 'remember_token'])]
@@ -35,7 +36,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Review::class);
     }
-
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
     
 }
 
